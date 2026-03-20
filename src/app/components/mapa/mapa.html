@@ -1,0 +1,30 @@
+<mgl-map
+  [style]="'mapbox://styles/mapbox/streets-v11'"
+  [zoom]="[12]"
+  [center]="center"
+  [accessToken]="accessToken"
+  appTracking
+  data-tracking="mapa-click">
+  
+  <mgl-marker 
+    *ngFor="let marker of markers" 
+    [lngLat]="[marker.lng, marker.lat]"
+    appTracking 
+    [attr.data-tracking]="'marcador-mapa'">  <!-- Importante: debe coincidir con el test -->
+    
+    <div 
+      class="marker-icon" 
+      [style.backgroundColor]="marker.color"
+      (click)="togglePopup(marker)">
+      📍
+    </div>
+    
+    <mgl-popup *ngIf="marker.showPopup">
+      <div class="popup-content">
+        <h4>{{ marker.title }}</h4>
+        <p>{{ marker.description }}</p>
+        <small>ID: {{ marker.id }}</small>
+      </div>
+    </mgl-popup>
+  </mgl-marker>
+</mgl-map>
